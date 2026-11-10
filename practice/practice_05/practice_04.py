@@ -6,7 +6,7 @@ import numpy as np
 
 # Для проверки задачи просто раскоментируйте его и запустите файл
 
-# Задача 1
+# # Задача 1
 # m = 10**7
 # rng = np.random.default_rng(42).normal(size=m)
 
@@ -60,8 +60,6 @@ import numpy as np
 # rng = np.random.default_rng(42)
 # m = rng.normal(size=n)
 
-
-
 # def loop_mean_std(arr):
 #     total_sum = 0.0
 #     sum_sq = 0.0
@@ -77,10 +75,8 @@ import numpy as np
     
 #     return mean, std
 
-
 # def numpy_mean_std(arr):
 #     return arr.mean(), arr.std()
-
 
 # def measure(fn, x, repeat=3):
 #     best = float("inf")
@@ -91,7 +87,6 @@ import numpy as np
 #         t1 = time.perf_counter()
 #         best = min(best, t1 - t0)
 #     return result, best
-
 
 # (mean_loop, std_loop), t_loop = measure(loop_mean_std, m)
 # (mean_np, std_np), t_numpy = measure(numpy_mean_std, m)
@@ -131,7 +126,6 @@ import numpy as np
 # rng = np.random.default_rng(42)
 # m = rng.normal(size=n)
 
-
 # def loop_transform(arr):
 #     result = [0.0] * len(arr)
 #     for i in range(len(arr)):
@@ -141,7 +135,6 @@ import numpy as np
 
 # def numpy_transform(arr):
 #     return np.sin(arr) + arr ** 2
-
 
 # def measure(fn, x, repeat=3):
 #     best = float("inf")
@@ -153,19 +146,14 @@ import numpy as np
 #         best = min(best, t1 - t0)
 #     return result, best
 
-
 # r_loop, t_loop = measure(loop_transform, m)
 # r_numpy, t_numpy = measure(numpy_transform, m)
-
 
 # print(f"n = {n}")
 # print(f"Цикл:   {t_loop*1000:10.2f} мс")
 # print(f"NumPy:  {t_numpy*1000:10.2f} мс")
 # print(f"Ускорение: {t_loop / t_numpy:.1f}x")
-
 # print(f"Результаты совпадают: {np.allclose(r_loop, r_numpy)}")
-
-
 
 # print("\n--- Вывод ---")
 # print("Список Python выделяет память под каждый объект отдельно.")
