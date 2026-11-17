@@ -1,8 +1,7 @@
-# Практика на четвертом занятии 10.11.2026
-
 import time
 import math
 import numpy as np
+import sys
 
 # Для проверки задачи просто раскоментируйте его и запустите файл
 
@@ -321,23 +320,169 @@ import numpy as np
 
 # print(f"Средние по столбцам после нормировки (NumPy):\n{numpy_center(matrix).mean(axis=0)}")
 
-# Задача 7
-print("Задача 7")
+
+
+
+
+
+
+# # Задача 7
+# print("Задача 7")
+# n = 10**6
+# rng = np.random.default_rng(42)
+# a = rng.normal(size=n)
+
+# def loop_max(arr):
+#     max_val = arr[0]
+#     max_idx = 0
+#     for i in range(1, len(arr)):
+#         if arr[i] > max_val:
+#             max_val = arr[i]
+#             max_idx = i
+#     return max_val, max_idx
+
+# def numpy_max(arr):
+#     return arr.max(), arr.argmax()
+
+# def measure(fn, x, repeat=3):
+#     best = float("inf")
+#     result = None
+#     for _ in range(repeat):
+#         t0 = time.perf_counter()
+#         result = fn(x)
+#         t1 = time.perf_counter()
+#         best = min(best, t1 - t0)
+#     return result, best
+# (val_loop, idx_loop), t_loop = measure(loop_max, a)
+# (val_np, idx_np), t_numpy = measure(numpy_max, a)
+
+# print(f"n = {n}")
+# print(f"Цикл: {t_loop*1000} мс")
+# print(f"NumPy: {t_numpy*1000} мс")
+# print(f"Ускорение: {t_loop / t_numpy}x\n")
+
+# print(f"Результаты (цикл): max = {val_loop}, idx = {idx_loop}")
+# print(f"Результаты (NumPy): max = {val_np}, idx = {idx_np}")
+# print(f"Совпадают: {np.isclose(val_loop, val_np) and idx_loop == idx_np}")
+
+# print("\n--- Вывод ---")
+# print("Цикл требует явной инициализации max_val и max_idx, а также")
+# print("ручного сравнения каждого элемента.")
+# print("А NumPy версия всего лишь одна строка: return arr.max(), arr.argmax().")
+
+
+
+
+# # Задача 8
+# print("Задача 8")
+
+# n = 10**6
+# rng = np.random.default_rng(42)
+# a = rng.normal(size=n)
+
+# def loop_filter(arr):
+#     return [x for x in arr if x > 0]
+
+# def numpy_filter(arr):
+#     return arr[arr > 0]
+
+# def measure(fn, x, repeat=3):
+#     best = float("inf")
+#     result = None
+#     for _ in range(repeat):
+#         t0 = time.perf_counter()
+#         result = fn(x)
+#         t1 = time.perf_counter()
+#         best = min(best, t1 - t0)
+#     return result, best
+
+# r_loop, t_loop = measure(loop_filter, a)
+# r_numpy, t_numpy = measure(numpy_filter, a)
+
+# print(f"n = {n}")
+# print(f"Цикл:   {t_loop*1000} мс")
+# print(f"NumPy:  {t_numpy*1000} мс")
+# print(f"Ускорение: {t_loop / t_numpy}x\n")
+
+# # sys.getsizeof показывает размер самого объекта
+# # Для списка Python он не учитывает память под сами числа (объекты float),
+# mem_loop = sys.getsizeof(r_loop) / (1024**2)
+# mem_numpy = sys.getsizeof(r_numpy) / (1024**2)
+
+# print(f"Память (Цикл):  {mem_loop} МБ")
+# print(f"Память (NumPy): {mem_numpy} МБ")
+# print(f"Разница в памяти: {mem_loop / mem_numpy}x\n")
+
+# print(f"Результаты совпадают: {np.allclose(r_loop, r_numpy)}")
+
+# print("\n--- Вывод ---")
+# print("NumPy быстрее в десятки раз. Список Python занимает больше памяти, чем Массив NumPy")
+
+
+
+
+# # Задача 9
+# print("Задача 9")
+# n = 10**6
+# rng = np.random.default_rng(42)
+
+# def loop_abs_inplace(arr):
+#     for i in range(len(arr)):
+#         if arr[i] < 0:
+#             arr[i] = -arr[i]
+
+# def numpy_abs_inplace(arr):
+#     arr[arr < 0] *= -1
+
+# def measure_inplace(fn, original_arr, repeat=3):
+#     best = float("inf")
+    
+#     for _ in range(repeat):
+#         # Обязательно делаем копию, иначе массив будет положительным
+#         arr_copy = original_arr.copy()
+        
+#         t0 = time.perf_counter()
+#         fn(arr_copy)
+#         t1 = time.perf_counter()
+        
+#         best = min(best, t1 - t0)
+#     return arr_copy, best
+
+# # Создаем базовый массив
+# a_base = rng.normal(size=n)
+
+# r_loop, t_loop = measure_inplace(loop_abs_inplace, a_base)
+# r_numpy, t_numpy = measure_inplace(numpy_abs_inplace, a_base)
+
+# print(f"n = {n}")
+# print(f"Цикл: {t_loop*1000} мс")
+# print(f"NumPy: {t_numpy*1000} мс")
+# print(f"Ускорение: {t_loop / t_numpy}x\n")
+
+# print(f"Отрицательных осталось (Цикл):  {np.sum(r_loop < 0)}")
+# print(f"Отрицательных осталось (NumPy): {np.sum(r_numpy < 0)}")
+# print(f"Результаты совпадают: {np.allclose(r_loop, r_numpy)}")
+
+# print("\n--- Вывод ---")
+# print("NumPy снова быстрее.")
+
+
+
+
+
+
+# Задача 10
+print("Задача 10")
+
 n = 10**6
 rng = np.random.default_rng(42)
-a = rng.normal(size=n)
+a = rng.normal(size=n) 
 
-def loop_max(arr):
-    max_val = arr[0]
-    max_idx = 0
-    for i in range(1, len(arr)):
-        if arr[i] > max_val:
-            max_val = arr[i]
-            max_idx = i
-    return max_val, max_idx
+def loop_mask(arr):
+    return [x for x in arr if -1 < x < 1]
 
-def numpy_max(arr):
-    return arr.max(), arr.argmax()
+def numpy_mask(arr):
+    return arr[(arr > -1) & (arr < 1)]
 
 def measure(fn, x, repeat=3):
     best = float("inf")
@@ -348,19 +493,19 @@ def measure(fn, x, repeat=3):
         t1 = time.perf_counter()
         best = min(best, t1 - t0)
     return result, best
-(val_loop, idx_loop), t_loop = measure(loop_max, a)
-(val_np, idx_np), t_numpy = measure(numpy_max, a)
+
+r_loop, t_loop = measure(loop_mask, a)
+r_numpy, t_numpy = measure(numpy_mask, a)
 
 print(f"n = {n}")
 print(f"Цикл: {t_loop*1000} мс")
 print(f"NumPy: {t_numpy*1000} мс")
-print(f"Ускорение: {t_loop / t_numpy:.1f}x\n")
+print(f"Ускорение: {t_loop / t_numpy}x\n")
 
-print(f"Результаты (цикл): max = {val_loop:}, idx = {idx_loop}")
-print(f"Результаты (NumPy): max = {val_np}, idx = {idx_np}")
-print(f"Совпадают: {np.isclose(val_loop, val_np) and idx_loop == idx_np}")
+print(f"Элементов отобрано (Цикл): {len(r_loop)}")
+print(f"Элементов отобрано (NumPy): {len(r_numpy)}")
+print(f"Результаты совпадают: {np.allclose(r_loop, r_numpy)}")
+
 
 print("\n--- Вывод ---")
-print("Цикл требует явной инициализации max_val и max_idx, а также")
-print("ручного сравнения каждого элемента .")
-print("А NumPy версия всего лишь одна строка: return arr.max(), arr.argmax().")
+print("   NumPy снова работает в разы быстрее.")
