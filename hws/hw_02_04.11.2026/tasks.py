@@ -887,7 +887,7 @@ def main():
     task6()
     task7()
     task8()
-    #task9()
+    task9()
     print("-------- БЛОК 3 --------")
     task10()
     task11()
