@@ -471,41 +471,100 @@ import sys
 
 
 
-# Задача 10
-print("Задача 10")
+# # Задача 10
+# print("Задача 10")
 
-n = 10**6
-rng = np.random.default_rng(42)
-a = rng.normal(size=n) 
+# n = 10**6
+# rng = np.random.default_rng(42)
+# a = rng.normal(size=n) 
 
-def loop_mask(arr):
-    return [x for x in arr if -1 < x < 1]
+# def loop_mask(arr):
+#     return [x for x in arr if -1 < x < 1]
 
-def numpy_mask(arr):
-    return arr[(arr > -1) & (arr < 1)]
+# def numpy_mask(arr):
+#     return arr[(arr > -1) & (arr < 1)]
 
-def measure(fn, x, repeat=3):
-    best = float("inf")
-    result = None
-    for _ in range(repeat):
-        t0 = time.perf_counter()
-        result = fn(x)
-        t1 = time.perf_counter()
-        best = min(best, t1 - t0)
-    return result, best
+# def measure(fn, x, repeat=3):
+#     best = float("inf")
+#     result = None
+#     for _ in range(repeat):
+#         t0 = time.perf_counter()
+#         result = fn(x)
+#         t1 = time.perf_counter()
+#         best = min(best, t1 - t0)
+#     return result, best
 
-r_loop, t_loop = measure(loop_mask, a)
-r_numpy, t_numpy = measure(numpy_mask, a)
+# r_loop, t_loop = measure(loop_mask, a)
+# r_numpy, t_numpy = measure(numpy_mask, a)
 
-print(f"n = {n}")
-print(f"Цикл: {t_loop*1000} мс")
-print(f"NumPy: {t_numpy*1000} мс")
-print(f"Ускорение: {t_loop / t_numpy}x\n")
+# print(f"n = {n}")
+# print(f"Цикл: {t_loop*1000} мс")
+# print(f"NumPy: {t_numpy*1000} мс")
+# print(f"Ускорение: {t_loop / t_numpy}x\n")
 
-print(f"Элементов отобрано (Цикл): {len(r_loop)}")
-print(f"Элементов отобрано (NumPy): {len(r_numpy)}")
-print(f"Результаты совпадают: {np.allclose(r_loop, r_numpy)}")
+# print(f"Элементов отобрано (Цикл): {len(r_loop)}")
+# print(f"Элементов отобрано (NumPy): {len(r_numpy)}")
+# print(f"Результаты совпадают: {np.allclose(r_loop, r_numpy)}")
 
 
-print("\n--- Вывод ---")
-print("   NumPy снова работает в разы быстрее.")
+# print("\n--- Вывод ---")
+# print("   NumPy снова работает в разы быстрее.")
+
+
+# # Доп скрипт
+# print("Дополнительный скрипт")
+# import time
+# import numpy as np
+
+# # ── Данные: 200 000 строк по 5 чисел ───────────────────────
+# rng = np.random.default_rng(42)
+# m = rng.normal(size=(200_000, 5))
+
+
+# # ── Способ 1: циклы ────────────────────────────────────────
+# def loop_version(mat):
+#     n, k = mat.shape
+
+#     # сумма каждой строки
+#     row_sums = [0.0] * n
+#     # TODO
+
+#     # максимум и его индекс по каждому столбцу
+#     col_max = [0.0] * k
+#     col_arg = [0] * k
+#     # TODO
+
+#     return row_sums, col_max, col_arg
+
+
+# # ── Способ 2: NumPy ────────────────────────────────────────
+# def numpy_version(mat):
+#     # TODO
+#     return row_sums, col_max, col_arg
+
+
+# # ── Замер: 3 раза, берём лучший ────────────────────────────
+# def measure(fn, x, repeat=3):
+#     best = float("inf")
+#     result = None
+#     for _ in range(repeat):
+#         t0 = time.perf_counter()
+#         result = fn(x)
+#         t1 = time.perf_counter()
+#         best = min(best, t1 - t0)
+#     return result, best
+
+
+# (r_loop,  t_loop)  = measure(loop_version,  m)
+# (r_numpy, t_numpy) = measure(numpy_version, m)
+
+# print(f"цикл:   {t_loop*1000:10.2f} мс")
+# print(f"NumPy:  {t_numpy*1000:10.2f} мс")
+# print(f"ускорение: {t_loop / t_numpy:.1f}×")
+# print()
+# print("суммы строк совпадают:  ", np.allclose(r_loop[0], r_numpy[0]))
+# print("максимумы совпадают:    ", np.allclose(r_loop[1], r_numpy[1]))
+# print("индексы совпадают:      ", np.array_equal(r_loop[2], r_numpy[2]))
+# print()
+# print("NumPy, максимумы по столбцам:", np.round(r_numpy[1], 4))
+# print("NumPy, их индексы:           ", r_numpy[2])
