@@ -200,127 +200,127 @@ def print_journal_secant(journal, title=""):
 
 
 
-# ── Задание 2 ──────────────────────────────
-print("\n--- Теоретическая проверка ---")
-print("f(x) = e^x - kx,  f'(x) = e^x - k")
-print("Условие экстремума: f'(x) = 0 => e^x = k , тогда  x = ln(k)")
-print("Минимум функции: f(ln(k)) = k - k*ln(k) = k(1 - ln(k))")
+# # ── Задание 2 ──────────────────────────────
+# print("\n--- Теоретическая проверка ---")
+# print("f(x) = e^x - kx,  f'(x) = e^x - k")
+# print("Условие экстремума: f'(x) = 0 => e^x = k , тогда  x = ln(k)")
+# print("Минимум функции: f(ln(k)) = k - k*ln(k) = k(1 - ln(k))")
 
-k1 = 1
-x_min1 = math.log(k1)
-f_min1 = k1 * (1 - math.log(k1))
-print(f"Для k=1: минимум в x={x_min1:.2f}, f_min={f_min1:.2f}. Корней нет (минимум > 0).")
+# k1 = 1
+# x_min1 = math.log(k1)
+# f_min1 = k1 * (1 - math.log(k1))
+# print(f"Для k=1: минимум в x={x_min1:.2f}, f_min={f_min1:.2f}. Корней нет (минимум > 0).")
 
-k_e = math.e
-x_min_e = math.log(k_e)
-f_min_e = k_e * (1 - math.log(k_e))
-print(f"Для k=e: минимум в x={x_min_e:.2f}, f_min={f_min_e:.2e}. Один корень (касание).")
-print("Метод Ньютона: f'(x)=0, деление на ноль. Секущие: f(x_prev) прмиерно равен f(x_curr), знаменатель ≈ 0.")
-print("Бисекция: f(x) >= 0 везде, нет смены знака.")
+# k_e = math.e
+# x_min_e = math.log(k_e)
+# f_min_e = k_e * (1 - math.log(k_e))
+# print(f"Для k=e: минимум в x={x_min_e:.2f}, f_min={f_min_e:.2e}. Один корень (касание).")
+# print("Метод Ньютона: f'(x)=0, деление на ноль. Секущие: f(x_prev) прмиерно равен f(x_curr), знаменатель ≈ 0.")
+# print("Бисекция: f(x) >= 0 везде, нет смены знака.")
 
 
 
-def solve_for_k(k):
-    f = lambda x: np.exp(x) - k * x
-    df = lambda x: np.exp(x) - k
+# def solve_for_k(k):
+#     f = lambda x: np.exp(x) - k * x
+#     df = lambda x: np.exp(x) - k
     
-    print(f"\nAнализ для k = {k}")
+#     print(f"\nAнализ для k = {k}")
     
-    x_peak = math.log(k)
-    intervals = []
-    if k == 3:
-        # x=0.6 и x=1.5
-        intervals = [(0.1, 0.9), (1.1, 2.0)] 
-    elif k == 5:
-        # x=0.2 и x=2.5
-        intervals = [(0.1, 0.5), (1.5, 3.0)]    
-    results = []
+#     x_peak = math.log(k)
+#     intervals = []
+#     if k == 3:
+#         # x=0.6 и x=1.5
+#         intervals = [(0.1, 0.9), (1.1, 2.0)] 
+#     elif k == 5:
+#         # x=0.2 и x=2.5
+#         intervals = [(0.1, 0.5), (1.5, 3.0)]    
+#     results = []
     
-    for i, (a, b) in enumerate(intervals):
-        print(f"\n-- Поиск корня #{i+1} на интервале [{a}, {b}] --")
+#     for i, (a, b) in enumerate(intervals):
+#         print(f"\n-- Поиск корня #{i+1} на интервале [{a}, {b}] --")
         
-        x0_newton = (a + b) / 2 
-        try:
-            root_n, jn, status_n = newton(f, df, x0=x0_newton, eps=1e-9)
-            iter_n = len(jn) if status_n == 'ok' else "Не сош."
-        except:
-            root_n, iter_n, status_n = None, "Ошибка", "error"
+#         x0_newton = (a + b) / 2 
+#         try:
+#             root_n, jn, status_n = newton(f, df, x0=x0_newton, eps=1e-9)
+#             iter_n = len(jn) if status_n == 'ok' else "Не сош."
+#         except:
+#             root_n, iter_n, status_n = None, "Ошибка", "error"
             
-        x0_sec, x1_sec = a, b
-        try:
-            root_s, js, status_s = secant(f, x0=x0_sec, x1=x1_sec, eps=1e-9)
-            iter_s = len(js) if status_s == 'ok' else "Не сош."
-        except:
-            root_s, iter_s, status_s = None, "Ошибка", "error"
+#         x0_sec, x1_sec = a, b
+#         try:
+#             root_s, js, status_s = secant(f, x0=x0_sec, x1=x1_sec, eps=1e-9)
+#             iter_s = len(js) if status_s == 'ok' else "Не сош."
+#         except:
+#             root_s, iter_s, status_s = None, "Ошибка", "error"
 
-        try:
-            root_b, jb, status_b = bisection(f, a, b, eps=1e-9)
-            iter_b = len(jb) if status_b == 'ok' else "Не сош."
-        except Exception as e:
-            root_b, iter_b, status_b = None, "Ошибка", str(e)
+#         try:
+#             root_b, jb, status_b = bisection(f, a, b, eps=1e-9)
+#             iter_b = len(jb) if status_b == 'ok' else "Не сош."
+#         except Exception as e:
+#             root_b, iter_b, status_b = None, "Ошибка", str(e)
 
-        results.append({
-            'interval': f"[{a}, {b}]",
-            'newton': (root_n, iter_n),
-            'secant': (root_s, iter_s),
-            'bisect': (root_b, iter_b)
-        })
+#         results.append({
+#             'interval': f"[{a}, {b}]",
+#             'newton': (root_n, iter_n),
+#             'secant': (root_s, iter_s),
+#             'bisect': (root_b, iter_b)
+#         })
 
-    # Вывод таблицы для текущего k
-    print(f"\nk = {k}:")
-    print(f"{'Метод':>12} | {'Интервал':>10} | {'Корень':>12} | {'Итераций':>10}")
-    print("-" * 55)
-    for r in results:
-        print(f"{'Ньютон':>12} | {r['interval']:>10} | {r['newton'][0]:>12.6f} | {r['newton'][1]:>10}")
-        print(f"{'Секущие':>12} | {r['interval']:>10} | {r['secant'][0]:>12.6f} | {r['secant'][1]:>10}")
-        print(f"{'Бисекция':>12} | {r['interval']:>10} | {r['bisect'][0]:>12.6f} | {r['bisect'][1]:>10}")
-        print("-" * 55)
+#     # Вывод таблицы для текущего k
+#     print(f"\nk = {k}:")
+#     print(f"{'Метод':>12} | {'Интервал':>10} | {'Корень':>12} | {'Итераций':>10}")
+#     print("-" * 55)
+#     for r in results:
+#         print(f"{'Ньютон':>12} | {r['interval']:>10} | {r['newton'][0]:>12.6f} | {r['newton'][1]:>10}")
+#         print(f"{'Секущие':>12} | {r['interval']:>10} | {r['secant'][0]:>12.6f} | {r['secant'][1]:>10}")
+#         print(f"{'Бисекция':>12} | {r['interval']:>10} | {r['bisect'][0]:>12.6f} | {r['bisect'][1]:>10}")
+#         print("-" * 55)
 
-solve_for_k(3)
-solve_for_k(5)
+# solve_for_k(3)
+# solve_for_k(5)
 
 
-print("\n--- График зависимости корней от k ---")
-k_array = np.arange(math.e, 10.1, 0.1)
-root1_array = []
-root2_array = []
+# print("\n--- График зависимости корней от k ---")
+# k_array = np.arange(math.e, 10.1, 0.1)
+# root1_array = []
+# root2_array = []
 
-for k_val in k_array:
-    f_k = lambda x: np.exp(x) - k_val * x
-    a1, b1 = 0.0, math.log(k_val)
-    a2, b2 = math.log(k_val), k_val
+# for k_val in k_array:
+#     f_k = lambda x: np.exp(x) - k_val * x
+#     a1, b1 = 0.0, math.log(k_val)
+#     a2, b2 = math.log(k_val), k_val
     
-    try:
-        r1, _, _ = bisection(f_k, a1 + 1e-5, b1 - 1e-5, eps=1e-6) # чуть отступаем от нуля производной
-        root1_array.append(r1)
-    except:
-        root1_array.append(np.nan)
+#     try:
+#         r1, _, _ = bisection(f_k, a1 + 1e-5, b1 - 1e-5, eps=1e-6) # чуть отступаем от нуля производной
+#         root1_array.append(r1)
+#     except:
+#         root1_array.append(np.nan)
         
-    try:
-        r2, _, _ = bisection(f_k, a2 + 1e-5, b2, eps=1e-6)
-        root2_array.append(r2)
-    except:
-        root2_array.append(np.nan)
+#     try:
+#         r2, _, _ = bisection(f_k, a2 + 1e-5, b2, eps=1e-6)
+#         root2_array.append(r2)
+#     except:
+#         root2_array.append(np.nan)
 
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.plot(k_array, root1_array, label="Корень 1 (меньший)", color='blue', linewidth=2)
-ax.plot(k_array, root2_array, label="Корень 2 (больший)", color='red', linewidth=2)
+# fig, ax = plt.subplots(figsize=(8, 5))
+# ax.plot(k_array, root1_array, label="Корень 1 (меньший)", color='blue', linewidth=2)
+# ax.plot(k_array, root2_array, label="Корень 2 (больший)", color='red', linewidth=2)
 
-ax.set_xlabel("Параметр k", fontsize=12)
-ax.set_ylabel("Корень x*", fontsize=12)
-ax.set_title("Зависимость корней уравнения e^x - kx = 0 от параметра k", fontsize=14, fontweight="bold")
-ax.grid(True, alpha=0.3)
-ax.legend()
-plt.show()
+# ax.set_xlabel("Параметр k", fontsize=12)
+# ax.set_ylabel("Корень x*", fontsize=12)
+# ax.set_title("Зависимость корней уравнения e^x - kx = 0 от параметра k", fontsize=14, fontweight="bold")
+# ax.grid(True, alpha=0.3)
+# ax.legend()
+# plt.show()
 
-print("\nВывод")
-print("Влияние на число корней:")
-print(" - При k < e корней нет ")
-print(" - При k = e есть ровно один корень")
-print(" - При k > e два действительных корня")
-print("Влияние на сходимость методов:")
-print(" - При k > e все методы работают. Ньютон и секущие сходятся за 4-7 итераций.  Метод бисекции надежен, но медленный (31 итерация)")
-print(" - При k = e (кратный корень) методы теряют сходимость, а именно")
-print("     - У ньютона случается деление на ноль, так как f'(x) = 0")
-print("     - У секущих знаменатель разности f(x) стремится к нулю")
-print("     - У бисекции нет смены знака, так как f(x) >= 0.")
+# print("\nВывод")
+# print("Влияние на число корней:")
+# print(" - При k < e корней нет ")
+# print(" - При k = e есть ровно один корень")
+# print(" - При k > e два действительных корня")
+# print("Влияние на сходимость методов:")
+# print(" - При k > e все методы работают. Ньютон и секущие сходятся за 4-7 итераций.  Метод бисекции надежен, но медленный (31 итерация)")
+# print(" - При k = e (кратный корень) методы теряют сходимость, а именно")
+# print("     - У ньютона случается деление на ноль, так как f'(x) = 0")
+# print("     - У секущих знаменатель разности f(x) стремится к нулю")
+# print("     - У бисекции нет смены знака, так как f(x) >= 0.")
